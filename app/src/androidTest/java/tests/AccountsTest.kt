@@ -6,14 +6,19 @@ import com.atdroid.atyurin.futuremoney.activity.MainActivity
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
 import com.kaspersky.kaspresso.params.FlakySafetyParams
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
+import junitparams.JUnitParamsRunner
+import junitparams.Parameters
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import screens.AccountsScreen
 import java.io.File
 
-class AccountsScreenTest() : TestCase(
+@RunWith(JUnitParamsRunner::class)
+class AccountsScreenTest(): TestCase(
     kaspressoBuilder = Kaspresso.Builder.simple(
         customize = {
             flakySafetyParams = FlakySafetyParams.custom(timeoutMs = 10_000, intervalMs = 250)
@@ -51,11 +56,13 @@ class AccountsScreenTest() : TestCase(
         val account = AccountsScreen()
         val name = "for rest"
         val amount = "25000"
-
-        //act
+        val message = "Done"
         step("Открыть экран добавления счетов") {
             account.openAddAccount()
         }
+
+
+        //act
         step("Заполнить поля") {
             account.fillName(name)
             account.fillAmount(amount)
@@ -63,13 +70,12 @@ class AccountsScreenTest() : TestCase(
         }
 
         //assert
-
         step("Проверка тоста о создании счета") {
             var decorView: View? = null
             activityRule.scenario.onActivity { activity ->
                 decorView = activity.window.decorView
             }
-            account.checkToast("Done", decorView!!)
+            account.checkToast(message, decorView!!)
         }
         step("Проверить отображение списка счетов") {
             account.checkCard(name, "%,d".format(amount.toInt()), 0)
@@ -82,6 +88,39 @@ class AccountsScreenTest() : TestCase(
 //    2) Добавить новый счёт (Account), негативный кейс: добавить невалидное значение, убедиться, что счёт создать не получается (можно проверить разные варианты)
 //    параметризация тип
 
+    @Test
+    @Parameters(method = "invalidData")
+    fun accountScreen_AddAccountWithInvalidValue_AccountIsNotCreated(invalidName: String, invalidAmount: String, message: String) = run{
+        //arrange
+        val account = AccountsScreen()
+        step("Открыть экран добавления счетов") {
+            account.openAddAccount()
+        }
 
+        //act
+        step("Заполнить поля некорректными данными") {
+            account.fillName(invalidName)
+            account.fillAmount(invalidAmount)
+            account.confirm()
+        }
+
+        //assert
+        step("Проверка тоста на ошибку создании счета") {
+            var decorView: View? = null
+            activityRule.scenario.onActivity { activity ->
+                decorView = activity.window.decorView
+            }
+            account.checkToast(message, decorView!!)
+        }
+    }
+
+    fun invalidData() = listOf(
+        arrayOf("", "100", "The name is not specified!"),
+        arrayOf("Valid name", "", "The amount is not specified!"),
+        arrayOf("Valid name", "qwerty", "The amount is not specified!"),
+        arrayOf("Valid name", "*&*&^", "The amount is not specified!"),
+        arrayOf("Valid name", "     ", "The amount is not specified!"),
+        arrayOf("", "", "The name is not specified!")
+    )
 
 }
