@@ -18,7 +18,7 @@ import screens.AccountsScreen
 import java.io.File
 
 @RunWith(JUnitParamsRunner::class)
-class AccountsScreenTest(): TestCase(
+class AccountsTest: TestCase(
     kaspressoBuilder = Kaspresso.Builder.simple(
         customize = {
             flakySafetyParams = FlakySafetyParams.custom(timeoutMs = 10_000, intervalMs = 250)
@@ -78,7 +78,7 @@ class AccountsScreenTest(): TestCase(
             account.checkToast(message, decorView!!)
         }
         step("Проверить отображение списка счетов") {
-            account.checkCard(name, "%,d".format(amount.toInt()), 0)
+            account.checkCard(name, "%,d".format(amount.toInt()))
         }
     }
 
@@ -86,7 +86,7 @@ class AccountsScreenTest(): TestCase(
 
 
 //    2) Добавить новый счёт (Account), негативный кейс: добавить невалидное значение, убедиться, что счёт создать не получается (можно проверить разные варианты)
-//    параметризация тип
+
 
     @Test
     @Parameters(method = "invalidData")
@@ -118,6 +118,7 @@ class AccountsScreenTest(): TestCase(
         arrayOf("", "100", "The name is not specified!"),
         arrayOf("Valid name", "", "The amount is not specified!"),
         arrayOf("Valid name", "qwerty", "The amount is not specified!"),
+        arrayOf("Valid name", "qwe1r3t421y3", "The amount is not specified!"),
         arrayOf("Valid name", "*&*&^", "The amount is not specified!"),
         arrayOf("Valid name", "     ", "The amount is not specified!"),
         arrayOf("", "", "The name is not specified!")

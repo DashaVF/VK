@@ -48,18 +48,7 @@ class AccountsScreen : BaseScreen(){
         inputAmount.replaceText(amount)
     }
 
-
-    fun checkToast(text: String, decorView: View) {
-        try {
-            onView(withText(text))
-                .inRoot(withDecorView(not(`is`(decorView))))
-                .check(matches(isDisplayed()))
-        } catch (e: Exception) {
-            throw AssertionError("Тост с сообщением \"$text\" не появился", e)
-        }
-    }
-
-    fun checkCard(name: String, amount: String, position: Int){
+    fun checkCard(name: String, amount: String){
         accountName.hasText(name)
         accountValue.hasText(amount)
     }
