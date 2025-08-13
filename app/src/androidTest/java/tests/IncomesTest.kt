@@ -36,7 +36,7 @@ class IncomesTest: BaseTest(){
             val endDay = "23"
             val period = "2"
             val typePeriod = "Week"
-            step("Открыть экран добавления счетов") {
+            step("Открыть экран добавления дохода") {
                 openAddIncome()
             }
 
@@ -58,7 +58,7 @@ class IncomesTest: BaseTest(){
                 checkToast(message, decorView!!)
             }
             openTab("Periodic")
-            step("Проверить отображение списка счетов") {
+            step("Проверить отображение дохода") {
                 checkCard(name, "%,d".format(amount.toInt()), beginDay, endDay)
             }
         }

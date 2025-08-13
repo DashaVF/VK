@@ -65,7 +65,7 @@ class TotalsTest: BaseTest(){
             step("Открыть экран добавления записи") {
                 openAddIncome()
             }
-            step("Добавить приход"){
+            step("Добавить доход"){
                 fillName(name)
                 fillAmount(income)
                 confirm()
@@ -89,7 +89,7 @@ class TotalsTest: BaseTest(){
 
         //assert
         TotalsScreen(this){
-            step("Проверить отображение элементов и вычисления"){
+            step("Проверить отображение элементов и вычислений"){
                 checkAllElements(calculateType, account, income, expense )
             }
         }

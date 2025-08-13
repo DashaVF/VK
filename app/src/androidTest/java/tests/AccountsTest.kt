@@ -56,7 +56,7 @@ class AccountsTest: BaseTest(){
                 }
                 checkToast(message, decorView!!)
             }
-            step("Проверить отображение списка счетов") {
+            step("Проверить отображение в списке счетов") {
                 checkCard(name, "%,d".format(amount.toInt()))
             }
         }
