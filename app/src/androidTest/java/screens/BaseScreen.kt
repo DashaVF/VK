@@ -24,9 +24,7 @@ abstract class BaseScreen(protected val testContext: TestContext<*>) : KScreen<B
     private val navIncomes =  KButton  { withId(R.id.nav_incomes) }
     private val navOutcomes =  KButton  { withId(R.id.nav_outcomes) }
     private val navAbout =  KButton  { withId(R.id.nav_about) }
-
     private val confirm = KButton  { withId(R.id.action_btn_add_budget_item_confirm) }
-
     private val drawerLayoutId = R.id.drawer_layout
 
     override val layoutId: Int? = null

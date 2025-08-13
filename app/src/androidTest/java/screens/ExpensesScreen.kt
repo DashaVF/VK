@@ -12,7 +12,6 @@ class ExpensesScreen(testContext: TestContext<*>) : BaseScreen(testContext){
 
     private val inputName = KEditText { withId(R.id.et_item_name_value) }
     private val inputAmount = KEditText { withId(R.id.et_item_amount_value) }
-
     private val fab = KButton { withId(R.id.fab) }
 
     fun fillName(name: String){

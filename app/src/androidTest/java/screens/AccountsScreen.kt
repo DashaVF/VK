@@ -14,11 +14,8 @@ class AccountsScreen(testContext: TestContext<*>) : BaseScreen(testContext){
     override val viewClass: Class<*> = AccountsFragment::class.java
 
     private val fab = KButton { withId(R.id.fab) }
-
     private val inputName = KEditText { withId(R.id.et_account_name_value) }
     private val inputAmount = KEditText { withId(R.id.et_account_amount_value) }
-
-
     private val accountName = KTextView { withId(R.id.tv_budget_item_name) }
     private val accountValue = KTextView { withId(R.id.tv_budget_item_value) }
 

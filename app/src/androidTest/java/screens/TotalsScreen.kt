@@ -20,18 +20,13 @@ class TotalsScreen(testContext: TestContext<*>) : BaseScreen(testContext){
 
     private val calculateButton = KButton{withId(R.id.action_btn_calc_totals)}
     private val calculateSpinner = KView{withId(R.id.sp_begin_date_type)}
-
     private val graph = KView{withId(R.id.graph_view_totals)}
-
     private val accountsTitle = KTextView{withId(R.id.tv_accounts_total_title)}
     private val accountsValue = KTextView{withId(R.id.tv_accounts_total_value)}
-
     private val incomesValue = KTextView{withId(R.id.tv_incomes_total_value)}
     private val incomesTitle = KTextView{withId(R.id.tv_incomes_total_title)}
-
     private val expensesTitle = KTextView{withId(R.id.tv_outcomes_total_title)}
     private val expensesValue = KTextView{withId(R.id.tv_outcomes_total_value)}
-
     private val totalValue = KTextView{withId(R.id.tv_total_value)}
     private val totalTitle = KTextView{withId(R.id.tv_total_title)}
 

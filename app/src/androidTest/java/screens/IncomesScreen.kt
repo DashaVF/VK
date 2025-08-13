@@ -25,14 +25,10 @@ class IncomesScreen(testContext: TestContext<*>)  : BaseScreen(testContext){
     override val viewClass: Class<*> = IncomesFragment::class.java
 
     private val fab = KButton { withId(R.id.fab) }
-
     private val type = KView { withId(R.id.sp_item_type) }
-
     private val beginDate = KTextView {withId(R.id.ll_item_begin_date)}
     private val endDate = KTextView {withId(R.id.ll_item_end_date)}
-
     private val periodType = KView { withId(R.id.sp_period_type_spinner) }
-
     private val period = KEditText { withId(R.id.et_period_value) }
 
 
@@ -48,9 +44,6 @@ class IncomesScreen(testContext: TestContext<*>)  : BaseScreen(testContext){
         withId(R.id.tv_budget_item_date)
         isDisplayed()
     }
-
-
-
     private val inputName = KEditText { withId(R.id.et_item_name_value) }
     private val inputAmount = KEditText { withId(R.id.et_item_amount_value) }
 
