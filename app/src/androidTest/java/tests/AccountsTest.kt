@@ -31,21 +31,11 @@ class AccountsTest: TestCase(
 
     @Before
     fun setup() = run {
-        val account = AccountsScreen()
-        account.openMenu()
-        account.openAccounts()
+        val menu = AccountsScreen(this)
+        menu.openMenu()
+        menu.openAccounts()
     }
 
-    @After
-    fun tearDown() {
-        val context = androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext
-        context.cacheDir?.deleteRecursively()
-
-        context.databaseList().forEach { dbName ->
-            context.deleteDatabase(dbName)
-        }
-
-    }
 
 
 //    1) Добавить новый счёт (Account), позитивный кейс: добавить валидное значение,
@@ -53,7 +43,7 @@ class AccountsTest: TestCase(
     @Test
     fun accountScreen_AddAccount_AccountIsCreatedAndDisplayed() = run{
         //arrange
-        val account = AccountsScreen()
+        val account = AccountsScreen(this)
         val name = "for rest"
         val amount = "25000"
         val message = "Done"
@@ -92,7 +82,7 @@ class AccountsTest: TestCase(
     @Parameters(method = "invalidData")
     fun accountScreen_AddAccountWithInvalidValue_AccountIsNotCreated(invalidName: String, invalidAmount: String, message: String) = run{
         //arrange
-        val account = AccountsScreen()
+        val account = AccountsScreen(this)
         step("Открыть экран добавления счетов") {
             account.openAddAccount()
         }

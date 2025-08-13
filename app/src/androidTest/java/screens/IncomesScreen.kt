@@ -26,13 +26,14 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
+import com.kaspersky.kaspresso.testcases.core.testcontext.TestContext
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.endsWith
 import java.lang.Thread.sleep
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class IncomesScreen  : BaseScreen(){
+class IncomesScreen(testContext: TestContext<*>)  : BaseScreen(testContext){
     override val layoutId: Int = R.layout.fragment_totals
     override val viewClass: Class<*> = IncomesFragment::class.java
 
@@ -82,7 +83,7 @@ class IncomesScreen  : BaseScreen(){
         tab(name).click()
     }
 
-    fun openAddIncomeScreen(){
+    fun openAddIncome(){
         fab.click()
     }
 
@@ -152,5 +153,16 @@ class IncomesScreen  : BaseScreen(){
         incomeDate.hasText(expectedText)
     }
 
+    companion object {
+        const val SCREEN_NAME = "Экран доходов"
+
+        inline operator fun invoke(testContext: TestContext<*>, crossinline block: IncomesScreen.() -> Unit) {
+            testContext.step(SCREEN_NAME) {
+                IncomesScreen(testContext).apply {
+                    block()
+                }
+            }
+        }
+    }
 
 }

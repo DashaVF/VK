@@ -10,6 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.atdroid.atyurin.futuremoney.R
 import com.atdroid.atyurin.futuremoney.fragments.AccountsFragment
+import com.kaspersky.kaspresso.testcases.core.testcontext.TestContext
 import io.github.kakaocup.kakao.edit.KEditText
 import io.github.kakaocup.kakao.list.KAdapterItem
 import io.github.kakaocup.kakao.recycler.KRecyclerItem
@@ -21,7 +22,7 @@ import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.not
 
 
-class AccountsScreen : BaseScreen(){
+class AccountsScreen(testContext: TestContext<*>) : BaseScreen(testContext){
 
     override val layoutId: Int = R.layout.fragment_account_items_list
     override val viewClass: Class<*> = AccountsFragment::class.java
@@ -53,7 +54,17 @@ class AccountsScreen : BaseScreen(){
         accountValue.hasText(amount)
     }
 
+    companion object {
+        const val SCREEN_NAME = "Экран счетов"
 
+        inline operator fun invoke(testContext: TestContext<*>, crossinline block: AccountsScreen.() -> Unit) {
+            testContext.step(SCREEN_NAME) {
+                AccountsScreen(testContext).apply {
+                    block()
+                }
+            }
+        }
+    }
 
 
 }

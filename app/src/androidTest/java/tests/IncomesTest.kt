@@ -27,20 +27,9 @@ class IncomesTest: TestCase(
 
     @Before
     fun setup() = run {
-        val income = IncomesScreen()
-        income.openMenu()
-        income.openIncomes()
-    }
-
-    @After
-    fun tearDown() {
-        val context = androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext
-        context.cacheDir?.deleteRecursively()
-
-        context.databaseList().forEach { dbName ->
-            context.deleteDatabase(dbName)
-        }
-
+        val menu = IncomesScreen(this)
+        menu.openMenu()
+        menu.openIncomes()
     }
 
 //    3) Добавить один периодический доход (Income),
@@ -49,7 +38,7 @@ class IncomesTest: TestCase(
     @Test
     fun incomeScreen_AddPeriodicIncome_IncomeIsDisplayedInCorrectTab() = run{
         //arrange
-        val income = IncomesScreen()
+        val income = IncomesScreen(this)
         val name = "dividends"
         val amount = "5000"
         val message = "Done"
@@ -60,7 +49,7 @@ class IncomesTest: TestCase(
         val typePeriod = "Week"
 
         step("Открыть экран добавления счетов") {
-            income.openAddIncomeScreen()
+            income.openAddIncome()
         }
 
         //act

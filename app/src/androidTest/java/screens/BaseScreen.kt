@@ -24,9 +24,7 @@ import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.not
 
 
-abstract class BaseScreen : KScreen<BaseScreen>(){
-
-    private val menuBurger = KButton { withId(R.id.nav_view) }
+abstract class BaseScreen(protected val testContext: TestContext<*>) : KScreen<BaseScreen>(){
 
     private val navTotals =  KButton  { withId(R.id.nav_totals) }
     private val navAccounts  =  KButton  { withId(R.id.nav_accounts) }
@@ -36,9 +34,14 @@ abstract class BaseScreen : KScreen<BaseScreen>(){
 
     private val confirm = KButton  { withId(R.id.action_btn_add_budget_item_confirm) }
 
-    private val calc = KButton  { withId(R.id.action_btn_calc_totals) }
-
     private val drawerLayoutId = R.id.drawer_layout
+
+    override val layoutId: Int? = null
+    override val viewClass: Class<*>? = null
+
+    fun step(description: String, actions: (StepInfo) -> Unit) {
+        testContext.step(description, actions)
+    }
 
     fun openMenu() {
         onView(withId(drawerLayoutId)).perform(DrawerActions.open())
@@ -47,10 +50,6 @@ abstract class BaseScreen : KScreen<BaseScreen>(){
 
     fun confirm(){
         confirm.click()
-    }
-
-    fun calculate(){
-        calc.click()
     }
 
     fun openTotals(){
