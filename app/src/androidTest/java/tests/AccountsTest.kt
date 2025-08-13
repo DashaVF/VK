@@ -18,22 +18,17 @@ import screens.AccountsScreen
 import java.io.File
 
 @RunWith(JUnitParamsRunner::class)
-class AccountsTest: TestCase(
-    kaspressoBuilder = Kaspresso.Builder.simple(
-        customize = {
-            flakySafetyParams = FlakySafetyParams.custom(timeoutMs = 10_000, intervalMs = 250)
-        }
-    )
-) {
+class AccountsTest: BaseTest(){
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
 
     @Before
     fun setup() = run {
-        val menu = AccountsScreen(this)
-        menu.openMenu()
-        menu.openAccounts()
+        AccountsScreen(this){
+            openMenu()
+            openAccounts()
+        }
     }
 
 
@@ -42,65 +37,67 @@ class AccountsTest: TestCase(
 //    убедиться, что счёт создался и отобразился в списке
     @Test
     fun accountScreen_AddAccount_AccountIsCreatedAndDisplayed() = run{
-        //arrange
-        val account = AccountsScreen(this)
-        val name = "for rest"
-        val amount = "25000"
-        val message = "Done"
-        step("Открыть экран добавления счетов") {
-            account.openAddAccount()
-        }
 
-
-        //act
-        step("Заполнить поля") {
-            account.fillName(name)
-            account.fillAmount(amount)
-            account.confirm()
-        }
-
-        //assert
-        step("Проверка тоста о создании счета") {
-            var decorView: View? = null
-            activityRule.scenario.onActivity { activity ->
-                decorView = activity.window.decorView
+        AccountsScreen(this){
+            //arrange
+            val name = "for rest"
+            val amount = "25000"
+            val message = "Done"
+            step("Открыть экран добавления счетов") {
+                openAddAccount()
             }
-            account.checkToast(message, decorView!!)
+
+            //act
+            step("Заполнить поля") {
+                fillName(name)
+                fillAmount(amount)
+                confirm()
+            }
+
+            //assert
+            step("Проверка тоста о создании счета") {
+                var decorView: View? = null
+                activityRule.scenario.onActivity { activity ->
+                    decorView = activity.window.decorView
+                }
+                checkToast(message, decorView!!)
+            }
+            step("Проверить отображение списка счетов") {
+                checkCard(name, "%,d".format(amount.toInt()))
+            }
         }
-        step("Проверить отображение списка счетов") {
-            account.checkCard(name, "%,d".format(amount.toInt()))
-        }
+
     }
 
 
 
 
-//    2) Добавить новый счёт (Account), негативный кейс: добавить невалидное значение, убедиться, что счёт создать не получается (можно проверить разные варианты)
-
-
+//    2) Добавить новый счёт (Account), негативный кейс: добавить невалидное значение,
+//    убедиться, что счёт создать не получается (можно проверить разные варианты)
     @Test
     @Parameters(method = "invalidData")
     fun accountScreen_AddAccountWithInvalidValue_AccountIsNotCreated(invalidName: String, invalidAmount: String, message: String) = run{
-        //arrange
-        val account = AccountsScreen(this)
-        step("Открыть экран добавления счетов") {
-            account.openAddAccount()
-        }
-
-        //act
-        step("Заполнить поля некорректными данными") {
-            account.fillName(invalidName)
-            account.fillAmount(invalidAmount)
-            account.confirm()
-        }
-
-        //assert
-        step("Проверка тоста на ошибку создании счета") {
-            var decorView: View? = null
-            activityRule.scenario.onActivity { activity ->
-                decorView = activity.window.decorView
+        AccountsScreen(this){
+            //arrange
+            step("Открыть экран добавления счетов") {
+                openAddAccount()
             }
-            account.checkToast(message, decorView!!)
+
+            //act
+            step("Заполнить поля некорректными данными") {
+                fillName(invalidName)
+                fillAmount(invalidAmount)
+                confirm()
+            }
+
+            //assert
+            step("Проверка тоста на ошибку создании счета") {
+                var decorView: View? = null
+                activityRule.scenario.onActivity { activity ->
+                    decorView = activity.window.decorView
+                }
+                checkToast(message, decorView!!)
+            }
         }
     }
 

@@ -13,13 +13,7 @@ import org.junit.Test
 import screens.AccountsScreen
 import screens.IncomesScreen
 
-class IncomesTest: TestCase(
-    kaspressoBuilder = Kaspresso.Builder.simple(
-        customize = {
-            flakySafetyParams = FlakySafetyParams.custom(timeoutMs = 10_000, intervalMs = 250)
-        }
-    )
-) {
+class IncomesTest: BaseTest(){
 
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
@@ -27,54 +21,51 @@ class IncomesTest: TestCase(
 
     @Before
     fun setup() = run {
-        val menu = IncomesScreen(this)
-        menu.openMenu()
-        menu.openIncomes()
+        IncomesScreen(this){
+            openMenu()
+            openIncomes()
+        }
     }
 
 //    3) Добавить один периодический доход (Income),
 //    убедиться что он отобразился на нужном экране, в нужной вкладке
-
     @Test
     fun incomeScreen_AddPeriodicIncome_IncomeIsDisplayedInCorrectTab() = run{
-        //arrange
-        val income = IncomesScreen(this)
-        val name = "dividends"
-        val amount = "5000"
-        val message = "Done"
-        val type = "Periodic"
-        val beginDay = "7"
-        val endDay = "23"
-        val period = "2"
-        val typePeriod = "Week"
-
-        step("Открыть экран добавления счетов") {
-            income.openAddIncome()
-        }
-
-        //act
-        step("Заполнить поля") {
-            income.fillName(name)
-            income.fillAmount(amount)
-            income.selectType(type)
-            income.fillPeriodic(beginDay, endDay, period, typePeriod)
-            income.confirm()
-        }
-
-
-
-        //assert
-        step("Проверка тоста о создании") {
-            var decorView: View? = null
-            activityRule.scenario.onActivity { activity ->
-                decorView = activity.window.decorView
+        IncomesScreen(this){
+            //arrange
+            val name = "dividends"
+            val amount = "5000"
+            val message = "Done"
+            val type = "Periodic"
+            val beginDay = "7"
+            val endDay = "23"
+            val period = "2"
+            val typePeriod = "Week"
+            step("Открыть экран добавления счетов") {
+                openAddIncome()
             }
-            income.checkToast(message, decorView!!)
-        }
 
-        income.openTab("Periodic")
-        step("Проверить отображение списка счетов") {
-            income.checkCard(name, "%,d".format(amount.toInt()), beginDay, endDay)
+            //act
+            step("Заполнить поля") {
+                fillName(name)
+                fillAmount(amount)
+                selectType(type)
+                fillPeriodic(beginDay, endDay, period, typePeriod)
+                confirm()
+            }
+
+            //assert
+            step("Проверка тоста о создании") {
+                var decorView: View? = null
+                activityRule.scenario.onActivity { activity ->
+                    decorView = activity.window.decorView
+                }
+                checkToast(message, decorView!!)
+            }
+            openTab("Periodic")
+            step("Проверить отображение списка счетов") {
+                checkCard(name, "%,d".format(amount.toInt()), beginDay, endDay)
+            }
         }
     }
 
