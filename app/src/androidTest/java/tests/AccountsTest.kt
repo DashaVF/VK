@@ -3,19 +3,13 @@ package tests
 import android.view.View
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.atdroid.atyurin.futuremoney.activity.MainActivity
-import com.kaspersky.kaspresso.kaspresso.Kaspresso
-import com.kaspersky.kaspresso.params.FlakySafetyParams
-import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import junitparams.JUnitParamsRunner
 import junitparams.Parameters
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import screens.AccountsScreen
-import java.io.File
 
 @RunWith(JUnitParamsRunner::class)
 class AccountsTest: BaseTest(){

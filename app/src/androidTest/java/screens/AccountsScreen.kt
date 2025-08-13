@@ -1,25 +1,11 @@
 package screens
 
-import android.app.Activity
-import android.view.View
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.RootMatchers.withDecorView
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.atdroid.atyurin.futuremoney.R
 import com.atdroid.atyurin.futuremoney.fragments.AccountsFragment
 import com.kaspersky.kaspresso.testcases.core.testcontext.TestContext
 import io.github.kakaocup.kakao.edit.KEditText
-import io.github.kakaocup.kakao.list.KAdapterItem
-import io.github.kakaocup.kakao.recycler.KRecyclerItem
-import io.github.kakaocup.kakao.recycler.KRecyclerView
 import io.github.kakaocup.kakao.text.KButton
 import io.github.kakaocup.kakao.text.KTextView
-import org.hamcrest.Matcher
-import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.not
 
 
 class AccountsScreen(testContext: TestContext<*>) : BaseScreen(testContext){

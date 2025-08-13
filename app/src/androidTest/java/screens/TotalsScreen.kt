@@ -4,7 +4,6 @@ import androidx.compose.ui.test.hasText
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.action.ViewActions.click
 import com.atdroid.atyurin.futuremoney.R
-import com.atdroid.atyurin.futuremoney.fragments.AccountsFragment
 import com.atdroid.atyurin.futuremoney.fragments.TotalsFragment
 import com.kaspersky.kaspresso.testcases.core.testcontext.TestContext
 import io.github.kakaocup.kakao.common.views.KView

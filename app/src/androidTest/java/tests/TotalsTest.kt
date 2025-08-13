@@ -2,15 +2,9 @@ package tests
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.atdroid.atyurin.futuremoney.activity.MainActivity
-import com.kaspersky.kaspresso.kaspresso.Kaspresso
-import com.kaspersky.kaspresso.params.FlakySafetyParams
-import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
-import org.junit.After
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import screens.AccountsScreen
-import screens.BaseScreen
 import screens.ExpensesScreen
 import screens.IncomesScreen
 import screens.TotalsScreen
